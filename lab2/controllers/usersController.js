@@ -1,5 +1,5 @@
-const User = require("../models/usersModel");
-const { isValidObjectId } = require("mongoose");
+import { isValidObjectId } from "mongoose";
+import User from "../models/usersModel.js";
 
 const createUser = async (req, res) => {
   try {
@@ -127,7 +127,7 @@ const deleteUserById = async (req, res) => {
   res.status(204).send();
 };
 
-module.exports = {
+export default {
   createUser,
   getAllUsers,
   getUserById,

@@ -1,6 +1,6 @@
-const { Router } = require("express");
-const usersController = require("../controllers/usersController");
-const requestDetailsLogger = require("../middlewares/requestDetailsLogger");
+import { Router } from "express";
+import usersController from "../controllers/usersController.js";
+import requestDetailsLogger from "../middlewares/requestDetailsLogger.js";
 const router = Router();
 
 router.post("/", requestDetailsLogger, usersController.createUser);
@@ -10,4 +10,4 @@ router.get("/:id", usersController.getUserById);
 router.patch("/:id", usersController.updateUserById);
 router.delete("/:id", usersController.deleteUserById);
 
-module.exports = router;
+export default router;
