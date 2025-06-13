@@ -6,7 +6,7 @@ const createPost = async (req, res) => {
     if (!req.body.title || !req.body.authorId) {
       return res.status(400).json({
         status: "failed",
-        message: "there is some missing data",
+        message: "Missing data",
       });
     }
 
@@ -43,7 +43,7 @@ const getPostById = async (req, res) => {
     });
   }
 
-  const post = await Post.findOne({ _id: req.params.id }, { title: 1 });
+  const post = await Post.findById(req.params.id).populate("authorId");
 
   if (!post) {
     return res.status(404).json({

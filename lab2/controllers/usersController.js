@@ -6,7 +6,7 @@ const createUser = async (req, res) => {
     if (!req.body.name || !req.body.email || !req.body.password) {
       return res.status(400).json({
         status: "failure",
-        message: "there is some missing data",
+        message: "Missing data",
       });
     }
 
@@ -43,10 +43,7 @@ const getUserById = async (req, res) => {
     });
   }
 
-  const user = await User.findOne(
-    { _id: req.params.id },
-    { name: 1, email: 1 }
-  );
+  const user = await User.findById(req.params.id);
 
   if (!user) {
     return res.status(404).json({
