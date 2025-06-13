@@ -1,0 +1,23 @@
+[
+  {
+    "id": 1,
+    "name": "Alice Johnson",
+    "age": 20,
+    "course": "Computer Science",
+    "grades": { "math": 90, "programming": 95 }
+  },
+  {
+    "id": 3,
+    "name": "Carol Williams",
+    "age": 21,
+    "course": "Web Development",
+    "grades": { "html": 95, "javascript": 89 }
+  },
+  {
+    "id": 4,
+    "name": "David Adams",
+    "age": 25,
+    "course": "Software Testing",
+    "grades": { "java": 83, "selenium": 77 }
+  }
+]
