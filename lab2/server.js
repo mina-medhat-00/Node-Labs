@@ -4,9 +4,11 @@ import morgan from "morgan";
 import cors from "cors";
 import usersRoutes from "./routes/usersRoutes.js";
 import postsRoutes from "./routes/postsRoute.js";
+import "dotenv/config.js";
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+const MONGO_URI = process.env.MONGO_URI;
 
 // body parser
 // app.use: application level middleware , parses the request body to the json format
@@ -21,7 +23,7 @@ app.use("/api/v1/posts", postsRoutes);
 app.listen(PORT, () => {
   console.log(`Server is running on ws://localhost:${PORT}`);
   mongoose
-    .connect("mongodb://localhost:27017/iti-lab")
+    .connect(MONGO_URI)
     .then(() => {
       console.log("Connected to database");
     })
