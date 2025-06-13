@@ -3,123 +3,113 @@ import User from "../models/usersModel.js";
 
 const createUser = async (req, res) => {
   try {
-    const { body } = req;
-    if (!body.name || !body.email || !body.password) {
+    if (!req.body.name || !req.body.email || !req.body.password) {
       return res.status(400).json({
-        status: "Failure",
+        status: "failure",
         message: "there is some missing data",
       });
     }
 
-    const user = await User.create({
-      name: body.name,
-      email: body.email,
-      password: body.password,
-    });
+    const user = await User.create(req.body);
 
     res.status(201).json({
-      status: "Success",
+      status: "success",
       message: "User created successfully",
       data: user,
     });
   } catch (err) {
     res.status(500).json({
-      status: "Failure",
-      message: "Internal server error",
+      status: "failure",
+      message: err.message || "Internal server error",
     });
   }
 };
 
-const getAllUsers = async (req, res) => {
+const getAllUsers = async (_, res) => {
   const users = await User.find({}, { name: 1, email: 1 });
 
   res.status(200).json({
-    status: "Success",
+    status: "success",
     message: "Users fetched successfully",
     data: users,
   });
 };
 
 const getUserById = async (req, res) => {
-  const { id } = req.params;
-
-  if (!isValidObjectId(id)) {
+  if (!isValidObjectId(req.params.id)) {
     return res.status(400).json({
-      status: "Failure",
+      status: "failure",
       message: "Invalid user id",
     });
   }
 
-  //   const user = await User.findById(id);
-  const user = await User.findOne({ _id: id }, { name: 1, email: 1 });
+  const user = await User.findOne(
+    { _id: req.params.id },
+    { name: 1, email: 1 }
+  );
 
   if (!user) {
     return res.status(404).json({
-      status: "Failure",
+      status: "failure",
       message: "User not found",
     });
   }
 
   res.status(200).json({
-    status: "Success",
+    status: "success",
     message: "User fetched successfully",
     data: user,
   });
 };
 
 const updateUserById = async (req, res) => {
-  const { id } = req.params;
-  const { body } = req;
-
-  if (!body.name) {
+  if (!req.body.name) {
     return res.status(400).json({
-      status: "Failure",
+      status: "failure",
       message: "Name is required",
     });
   }
 
-  if (!isValidObjectId(id)) {
+  if (!isValidObjectId(req.params.id)) {
     return res.status(400).json({
-      status: "Failure",
+      status: "failure",
       message: "Invalid user id",
     });
   }
 
   const user = await User.findByIdAndUpdate(
-    id,
-    { name: body.name },
+    req.params.id,
+    { name: req.body.name },
     { new: true }
   );
 
   if (!user) {
     return res.status(404).json({
-      status: "Failure",
+      status: "failure",
       message: "User not found",
     });
   }
 
   res.status(200).json({
-    status: "Success",
+    status: "success",
     message: "User updated successfully",
     data: user,
   });
 };
 
 const deleteUserById = async (req, res) => {
-  const { id } = req.params;
-
-  if (!isValidObjectId(id)) {
+  if (!isValidObjectId(req.params.id)) {
     return res.status(400).json({
-      status: "Failure",
+      status: "failure",
       message: "Invalid user id",
     });
   }
 
-  const user = await User.findOneAndDelete({ _id: id });
+  const user = await User.findOneAndDelete({ _id: req.params.id });
 
   if (!user) {
     return res.status(404).json({
-      status: "Failure",
+      status: "failure",
       message: "User not found",
     });
   }
