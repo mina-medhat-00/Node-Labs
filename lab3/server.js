@@ -9,7 +9,7 @@ import { sanitizeMongoInput } from "express-v5-mongo-sanitize";
 import "dotenv/config.js";
 import usersRoutes from "./routes/usersRoutes.js";
 import errorHandler from "./middlewares/errorHandler.js";
-import AppError from "./utils/AppError.js";
+import AppError from "./utils/appError.js";
 import limiter from "./middlewares/rateLimiter.js";
 
 const app = express();
@@ -31,7 +31,7 @@ app.use(hpp());
 
 // routes
 // health check endpoint
-app.get("/", (req, res) => {
+app.get("/", (_, res) => {
   res.status(200).json({
     status: "success",
     message: "Server is running",
@@ -42,7 +42,6 @@ app.use("/api/v1/users", usersRoutes);
 
 // 404 error handler , always put it after all the routes
 app.use((req, res, next) => {
-  // res.render("404");
   next(new AppError("Route not found", 404));
 });
 
@@ -50,13 +49,13 @@ app.use((req, res, next) => {
 app.use(errorHandler);
 
 app.listen(process.env.PORT, () => {
-  console.log(`✅✅ Server is running on port ${process.env.PORT}`);
+  console.log(`Server is running on port ${process.env.PORT}`);
   mongoose
     .connect(process.env.DB_URI)
     .then(() => {
-      console.log("✅✅ Connected to MongoDB");
+      console.log("Connected to database");
     })
     .catch((err) => {
-      console.log("❌❌ Error connecting to MongoDB", err);
+      console.log("Error connecting to database", err);
     });
 });

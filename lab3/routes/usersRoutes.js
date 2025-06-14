@@ -2,7 +2,7 @@ import { Router } from "express";
 import usersController from "../controllers/usersController.js";
 import authenticate from "../middlewares/authenticate.js";
 import authorize from "../middlewares/authorize.js";
-import JoiValidator from "../middlewares/JoiValidator.js";
+import joiValidator from "../middlewares/joiValidator.js";
 import registerSchema from "../utils/schemas/registerSchema.js";
 import loginSchema from "../utils/schemas/loginSchema.js";
 
@@ -11,12 +11,12 @@ const router = Router();
 // register
 router.post(
   "/register",
-  JoiValidator(registerSchema),
+  joiValidator(registerSchema),
   usersController.register
 );
 
 // login
-router.post("/login", JoiValidator(loginSchema), usersController.login);
+router.post("/login", joiValidator(loginSchema), usersController.login);
 
 // get all users
 router.get(

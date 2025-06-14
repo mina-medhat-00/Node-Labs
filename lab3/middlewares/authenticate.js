@@ -1,11 +1,11 @@
-import pkg from "jsonwebtoken";
 import { promisify } from "util";
+import pkg from "jsonwebtoken";
 
 const { verify } = pkg;
 
 const verifyJwt = promisify(verify);
 
-const authenticate = async (req, res, next) => {
+const authenticate = async (req, _, next) => {
   //  extract token from headers
   const token = req.headers.authorization.split(" ")[1];
   // verify token

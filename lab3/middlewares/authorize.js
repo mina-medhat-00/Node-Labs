@@ -1,7 +1,7 @@
-import AppError from "../utils/AppError.js";
+import AppError from "../utils/appError.js";
 
 const authorize = (roles) => {
-  return (req, res, next) => {
+  return (req, _, next) => {
     if (!roles.includes(req.user.role)) {
       throw new AppError("Forbidden", 403);
     }
@@ -10,4 +10,3 @@ const authorize = (roles) => {
 };
 
 export default authorize;
-// higher order functions => return middleware function

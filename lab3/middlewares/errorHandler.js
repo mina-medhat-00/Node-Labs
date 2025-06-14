@@ -1,6 +1,6 @@
-import AppError from "../utils/AppError.js";
+import AppError from "../utils/appError.js";
 
-export default (err, req, res, next) => {
+export default (err, _, res) => {
   console.error(err.stack);
 
   if (err instanceof AppError) {

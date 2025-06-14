@@ -1,11 +1,13 @@
+import { promisify } from "util";
 import { isValidObjectId } from "mongoose";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import { promisify } from "util";
 import User from "../models/usersModel.js";
-import AppError from "../utils/AppError.js";
+import AppError from "../utils/appError.js";
 
-// if i have a function that does not promise , but if gave it a callback function will act async, i need it to return promise
+// if i have a function that does not promise ,
+// but given a callback function will act async,
+// i need it to return promise
 
 const signJwt = promisify(jwt.sign);
 
@@ -41,11 +43,6 @@ const register = async (req, res, next) => {
 
 const login = async (req, res, next) => {
   try {
-    // // code for generating random hex to use it as a secret key
-    // const crypto = require("crypto");
-    // const secret = crypto.randomBytes(64).toString("hex");
-    // console.log(secret);
-
     const { body } = req;
     if (!body.email || !body.password) {
       throw new AppError("Email and password are required", 400);

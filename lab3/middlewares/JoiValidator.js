@@ -1,7 +1,7 @@
-import AppError from "../utils/AppError.js";
+import AppError from "../utils/appError.js";
 
-const JoiValidator = (schema) => {
-  return (req, res, next) => {
+const joiValidator = (schema) => {
+  return (req, _, next) => {
     const { error } = schema.validate(req.body, { abortEarly: true });
     if (error) {
       const errMsg = error.details[0].message;
@@ -11,4 +11,4 @@ const JoiValidator = (schema) => {
   };
 };
 
-export default JoiValidator;
+export default joiValidator;
